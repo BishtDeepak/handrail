@@ -1,0 +1,238 @@
+{
+  "schema_version": "1.0",
+  "id": "mockbank.member.read_savings_balance",
+  "version": "1.0.0",
+  "status": "approved",
+  "description": "Look up a member by ID and return their current savings balance.",
+  "app": {
+    "product": "mockbank",
+    "product_version": ">=3.1,<4"
+  },
+  "inputs": {
+    "member_id": {
+      "type": "string",
+      "sensitivity": "internal",
+      "pattern": "^\\d{5}$",
+      "required": true,
+      "description": "Five-digit member number."
+    }
+  },
+  "outputs": {
+    "savings_balance": {
+      "type": "decimal",
+      "sensitivity": "confidential",
+      "currency": "USD",
+      "description": "Current balance of the primary savings share."
+    }
+  },
+  "outcomes": {
+    "MEMBER_NOT_FOUND": {
+      "kind": "business",
+      "detect": {
+        "all_of": [],
+        "any_of": [
+          {
+            "kind": "text",
+            "frame": [
+              "main"
+            ],
+            "matches": "No member found"
+          }
+        ]
+      },
+      "message": "No member exists with this ID.",
+      "extract": {}
+    },
+    "PERMISSION_DENIED": {
+      "kind": "business",
+      "detect": {
+        "all_of": [],
+        "any_of": [
+          {
+            "kind": "text",
+            "frame": [
+              "main"
+            ],
+            "matches": "(?i)access denied"
+          }
+        ]
+      },
+      "message": "The service account may not view this member.",
+      "extract": {}
+    }
+  },
+  "recoveries": [
+    {
+      "id": "dismiss_system_notice",
+      "detect": {
+        "all_of": [
+          {
+            "kind": "role",
+            "frame": [],
+            "role": "dialog",
+            "name": "System Notice"
+          }
+        ],
+        "any_of": []
+      },
+      "action": {
+        "do": "click",
+        "target": {
+          "frame": [],
+          "chain": [
+            {
+              "by": "role",
+              "role": "button",
+              "name": "OK",
+              "exact": true
+            }
+          ]
+        }
+      },
+      "max_attempts": 2,
+      "retry_step": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "open_search",
+      "risk": "read",
+      "expect": {
+        "any_of": [
+          "checkpoint:search_form"
+        ],
+        "timeout_ms": 10000
+      },
+      "origin": "author",
+      "action": "navigate",
+      "route": "/members/search",
+      "bind": {}
+    },
+    {
+      "id": "enter_member_id",
+      "risk": "read",
+      "origin": "author",
+      "action": "type",
+      "target": {
+        "frame": [
+          "main"
+        ],
+        "chain": [
+          {
+            "by": "role",
+            "role": "textbox",
+            "name": "Member ID",
+            "exact": true
+          },
+          {
+            "by": "label",
+            "label": "Member ID"
+          }
+        ],
+        "recorded_match": 1,
+        "rationale": "Legacy form has no accessible name on the input; the adjacent label is stable."
+      },
+      "value": "{{inputs.member_id}}"
+    },
+    {
+      "id": "submit_search",
+      "risk": "read",
+      "expect": {
+        "any_of": [
+          "checkpoint:member_detail",
+          "outcome:MEMBER_NOT_FOUND",
+          "outcome:PERMISSION_DENIED"
+        ],
+        "timeout_ms": 8000
+      },
+      "origin": "author",
+      "action": "click",
+      "target": {
+        "frame": [
+          "main"
+        ],
+        "chain": [
+          {
+            "by": "role",
+            "role": "button",
+            "name": "Search",
+            "exact": true
+          },
+          {
+            "by": "text",
+            "text": "Search"
+          }
+        ],
+        "recorded_match": 0
+      }
+    },
+    {
+      "id": "read_balance",
+      "risk": "read",
+      "origin": "author",
+      "action": "extract",
+      "target": {
+        "frame": [
+          "main"
+        ],
+        "chain": [
+          {
+            "by": "table_cell",
+            "row_key": "Savings",
+            "column": "Balance"
+          }
+        ],
+        "recorded_match": 0,
+        "rationale": "Share rows can be reordered; row key plus column header is order-independent."
+      },
+      "output": "savings_balance",
+      "parse": "currency"
+    }
+  ],
+  "checkpoints": {
+    "search_form": {
+      "all_of": [
+        {
+          "kind": "role",
+          "frame": [
+            "main"
+          ],
+          "role": "heading",
+          "name": "Member Search"
+        }
+      ],
+      "any_of": []
+    },
+    "member_detail": {
+      "all_of": [
+        {
+          "kind": "role",
+          "frame": [
+            "main"
+          ],
+          "role": "heading",
+          "name_matches": "^Member Detail"
+        }
+      ],
+      "any_of": []
+    }
+  },
+  "success": {
+    "checkpoint": "member_detail",
+    "outputs_present": [
+      "savings_balance"
+    ]
+  },
+  "triage": {
+    "enabled": false,
+    "allowed_recoveries": [],
+    "threshold": 0.85
+  },
+  "provenance": {
+    "created_by": "author",
+    "created_at": "2026-09-23T00:00:00Z",
+    "reviewed_by": "bishtdeepak",
+    "approved_at": "2026-09-23T19:19:42.168319Z"
+  },
+  "content_hash": "sha256:abecea759987188732e98e3701428c94bb93753300bf3575e9b91f8d25180466"
+}
