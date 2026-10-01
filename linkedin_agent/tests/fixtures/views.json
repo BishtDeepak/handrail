@@ -1,0 +1,56 @@
+{
+ "data": {
+  "elements": [
+   {
+    "value": {
+     "insightCards": [
+      {
+       "cards": [
+        {
+         "viewedAt": 1790841600000,
+         "viewer": {
+          "profile": {
+           "*miniProfile": "urn:li:fs_miniProfile:A"
+          }
+         }
+        },
+        {
+         "viewedAt": 1790834400000,
+         "viewer": {
+          "obfuscated": {
+           "headline": "Someone at a large company"
+          }
+         }
+        },
+        {
+         "viewedAt": 1790712000000,
+         "viewer": {
+          "profile": {
+           "*miniProfile": "urn:li:fs_miniProfile:B"
+          }
+         }
+        }
+       ]
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "included": [
+  {
+   "entityUrn": "urn:li:fs_miniProfile:A",
+   "firstName": "Dana",
+   "lastName": "Wu",
+   "occupation": "Staff Engineer at Example",
+   "publicIdentifier": "danawu"
+  },
+  {
+   "entityUrn": "urn:li:fs_miniProfile:B",
+   "firstName": "Eve",
+   "lastName": "Old",
+   "occupation": "Recruiter",
+   "publicIdentifier": "eveold"
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+[Unit]
+Description=LinkedIn daily summary
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=%h/.config/linkedin-agent.env
+ExecStart=%h/.local/bin/linkedin_agent --hours 24

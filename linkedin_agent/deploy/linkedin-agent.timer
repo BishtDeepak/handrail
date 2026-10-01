@@ -1,0 +1,10 @@
+[Unit]
+Description=Run LinkedIn daily summary every morning
+
+[Timer]
+OnCalendar=*-*-* 07:45
+RandomizedDelaySec=15m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

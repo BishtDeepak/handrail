@@ -1,0 +1,152 @@
+{
+ "data": {
+  "*elements": [
+   "x"
+  ]
+ },
+ "included": [
+  {
+   "$type": "com.linkedin.voyager.feed.render.UpdateV2",
+   "updateMetadata": {
+    "urn": "urn:li:activity:7511364285235200000"
+   },
+   "actor": {
+    "urn": "urn:li:member:1",
+    "name": {
+     "text": "Alice Chen"
+    },
+    "description": {
+     "text": "Alice Chen headline"
+    },
+    "navigationContext": {
+     "actionTarget": "https://www.linkedin.com/in/alice-chen"
+    }
+   },
+   "commentary": {
+    "text": {
+     "text": "Raft vs Paxos in production:\nlessons learned."
+    }
+   }
+  },
+  {
+   "$type": "com.linkedin.voyager.feed.render.UpdateV2",
+   "updateMetadata": {
+    "urn": "urn:li:activity:7511318986752000000"
+   },
+   "actor": {
+    "urn": "urn:li:company:42",
+    "name": {
+     "text": "Acme Corp"
+    },
+    "description": {
+     "text": "Acme Corp headline"
+    },
+    "navigationContext": {
+     "actionTarget": "https://www.linkedin.com/in/acme-corp"
+    }
+   },
+   "commentary": {
+    "text": {
+     "text": "We are hiring!"
+    }
+   }
+  },
+  {
+   "$type": "com.linkedin.voyager.feed.render.UpdateV2",
+   "updateMetadata": {
+    "urn": "urn:li:activity:7511349185740800000"
+   },
+   "actor": {
+    "urn": "urn:li:member:1",
+    "name": {
+     "text": "Random Person"
+    },
+    "description": {
+     "text": "Random Person headline"
+    },
+    "navigationContext": {
+     "actionTarget": "https://www.linkedin.com/in/random-person"
+    }
+   },
+   "commentary": {
+    "text": {
+     "text": "Viral post"
+    }
+   },
+   "header": {
+    "text": {
+     "text": "Bob Lee likes this"
+    }
+   }
+  },
+  {
+   "$type": "com.linkedin.voyager.feed.render.UpdateV2",
+   "updateMetadata": {
+    "urn": "urn:li:activity:7510941499392000000"
+   },
+   "actor": {
+    "urn": "urn:li:member:1",
+    "name": {
+     "text": "Old Author"
+    },
+    "description": {
+     "text": "Old Author headline"
+    },
+    "navigationContext": {
+     "actionTarget": "https://www.linkedin.com/in/old-author"
+    }
+   },
+   "commentary": {
+    "text": {
+     "text": "Stale post"
+    }
+   }
+  },
+  {
+   "$type": "com.linkedin.voyager.feed.render.UpdateV2",
+   "updateMetadata": {
+    "urn": "urn:li:sponsoredContent:123"
+   },
+   "actor": {
+    "urn": "urn:li:member:1",
+    "name": {
+     "text": "Ad"
+    },
+    "description": {
+     "text": "Ad headline"
+    },
+    "navigationContext": {
+     "actionTarget": "https://www.linkedin.com/in/ad"
+    }
+   },
+   "commentary": {
+    "text": {
+     "text": "Buy now"
+    }
+   }
+  },
+  {
+   "$type": "com.linkedin.voyager.feed.render.UpdateV2",
+   "updateMetadata": {
+    "urn": "urn:li:activity:7511364285235200000"
+   },
+   "actor": {
+    "urn": "urn:li:member:1",
+    "name": {
+     "text": "Alice Chen"
+    },
+    "description": {
+     "text": "Alice Chen headline"
+    },
+    "navigationContext": {
+     "actionTarget": "https://www.linkedin.com/in/alice-chen"
+    }
+   },
+   "commentary": {
+    "text": {
+     "text": "Raft vs Paxos in production:\nlessons learned."
+    }
+   }
+  }
+ ]
+}
