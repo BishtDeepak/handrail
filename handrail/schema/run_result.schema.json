@@ -1,0 +1,389 @@
+{
+  "$defs": {
+    "Aborted": {
+      "additionalProperties": false,
+      "properties": {
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "status": {
+          "const": "aborted",
+          "default": "aborted",
+          "title": "Status",
+          "type": "string"
+        },
+        "step_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Step Id"
+        }
+      },
+      "required": [
+        "reason"
+      ],
+      "title": "Aborted",
+      "type": "object"
+    },
+    "BusinessOutcome": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "pattern": "^[A-Z][A-Z0-9_]*$",
+          "title": "Code",
+          "type": "string"
+        },
+        "fields": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Fields",
+          "type": "object"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "status": {
+          "const": "business_outcome",
+          "default": "business_outcome",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "BusinessOutcome",
+      "type": "object"
+    },
+    "EscalationReason": {
+      "enum": [
+        "stuck",
+        "irreversible_step",
+        "unknown_state",
+        "session_expired",
+        "model_disagreement",
+        "judge_unavailable",
+        "low_confidence"
+      ],
+      "title": "EscalationReason",
+      "type": "string"
+    },
+    "FailureKind": {
+      "enum": [
+        "locator_not_found",
+        "locator_ambiguous",
+        "not_actionable",
+        "checkpoint_mismatch",
+        "output_missing",
+        "output_parse",
+        "app_error",
+        "timeout",
+        "recovery_exhausted",
+        "policy_violation",
+        "version_mismatch",
+        "surface_lost",
+        "target_unreachable",
+        "invalid_artifact"
+      ],
+      "title": "FailureKind",
+      "type": "string"
+    },
+    "HardFailure": {
+      "additionalProperties": false,
+      "description": "Stop and surface a debuggable error: which step, what was expected, what was observed.",
+      "properties": {
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "expected": {
+          "title": "Expected",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/FailureKind"
+        },
+        "observed": {
+          "title": "Observed",
+          "type": "string"
+        },
+        "status": {
+          "const": "hard_failure",
+          "default": "hard_failure",
+          "title": "Status",
+          "type": "string"
+        },
+        "step_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Step Id"
+        }
+      },
+      "required": [
+        "kind",
+        "step_id",
+        "expected",
+        "observed"
+      ],
+      "title": "HardFailure",
+      "type": "object"
+    },
+    "NeedsHuman": {
+      "additionalProperties": false,
+      "properties": {
+        "reason": {
+          "$ref": "#/$defs/EscalationReason"
+        },
+        "request_id": {
+          "title": "Request Id",
+          "type": "string"
+        },
+        "status": {
+          "const": "needs_human",
+          "default": "needs_human",
+          "title": "Status",
+          "type": "string"
+        },
+        "step_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Step Id"
+        }
+      },
+      "required": [
+        "reason",
+        "step_id",
+        "request_id"
+      ],
+      "title": "NeedsHuman",
+      "type": "object"
+    },
+    "StepRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "duration_ms": {
+          "minimum": 0,
+          "title": "Duration Ms",
+          "type": "integer"
+        },
+        "fallbacks": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Fallbacks",
+          "type": "integer"
+        },
+        "locator_strategy": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Locator Strategy"
+        },
+        "result": {
+          "enum": [
+            "ok",
+            "recovered",
+            "outcome",
+            "failed",
+            "escalated"
+          ],
+          "title": "Result",
+          "type": "string"
+        },
+        "retries": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Retries",
+          "type": "integer"
+        },
+        "started_at": {
+          "format": "date-time",
+          "title": "Started At",
+          "type": "string"
+        },
+        "step_id": {
+          "title": "Step Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "step_id",
+        "started_at",
+        "duration_ms",
+        "result"
+      ],
+      "title": "StepRecord",
+      "type": "object"
+    },
+    "Success": {
+      "additionalProperties": false,
+      "properties": {
+        "outputs": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "format": "date",
+                "type": "string"
+              }
+            ]
+          },
+          "title": "Outputs",
+          "type": "object"
+        },
+        "status": {
+          "const": "success",
+          "default": "success",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "title": "Success",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifact_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Artifact Ref"
+    },
+    "evidence": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "finished_at": {
+      "format": "date-time",
+      "title": "Finished At",
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "discovery",
+        "replay"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "outcome": {
+      "discriminator": {
+        "mapping": {
+          "aborted": "#/$defs/Aborted",
+          "business_outcome": "#/$defs/BusinessOutcome",
+          "hard_failure": "#/$defs/HardFailure",
+          "needs_human": "#/$defs/NeedsHuman",
+          "success": "#/$defs/Success"
+        },
+        "propertyName": "status"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/Success"
+        },
+        {
+          "$ref": "#/$defs/BusinessOutcome"
+        },
+        {
+          "$ref": "#/$defs/HardFailure"
+        },
+        {
+          "$ref": "#/$defs/NeedsHuman"
+        },
+        {
+          "$ref": "#/$defs/Aborted"
+        }
+      ],
+      "title": "Outcome"
+    },
+    "recoveries_applied": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Recoveries Applied",
+      "type": "array"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "steps": {
+      "items": {
+        "$ref": "#/$defs/StepRecord"
+      },
+      "title": "Steps",
+      "type": "array"
+    }
+  },
+  "required": [
+    "run_id",
+    "mode",
+    "outcome",
+    "started_at",
+    "finished_at"
+  ],
+  "title": "RunResult",
+  "type": "object",
+  "x-schema-version": "1.0"
+}
