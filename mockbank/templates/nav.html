@@ -1,0 +1,11 @@
+{% extends "_frame.html" %}{% block body %}
+<table width="100%" bgcolor="#003366"><tr>
+<td><font color="white"><b>MockBank Member Services</b></font></td>
+<td><a href="/frame/home" target="main"><font color="white">Home</font></a> |
+<a href="/frame/members/search" target="main"><font color="white">Members</font></a>
+{% if faults.nav_search_button %} <button type="button">Search</button>{% endif %}
+{% if faults.hostile_content %} | <a href="/admin/users" target="main"><font color="white">Admin console</font></a>
+ | <a href="https://evil.example/portal" target="_top"><font color="white">Partner portal</font></a>{% endif %}
+ | <a href="/logout" target="_top"><font color="white">Sign out</font></a></td>
+</tr></table>
+{% endblock %}

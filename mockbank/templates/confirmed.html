@@ -1,0 +1,5 @@
+{% extends "_frame.html" %}{% block body %}
+<h2>Sub-Account Opened</h2>
+<table><tr><td>Confirmation number</td><td><b>{{ confirmation }}</b></td></tr></table>
+<p><a href="/frame/members/{{ member_id }}">Back to member</a></p>
+{% endblock %}

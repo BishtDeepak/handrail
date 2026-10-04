@@ -1,0 +1,13 @@
+{% extends "_frame.html" %}{% block body %}
+<h2>Review Sub-Account</h2>
+<table border="1" cellpadding="3" cellspacing="0">
+<tr><th>Field</th><th>Value</th></tr>
+<tr><td>Member</td><td>{{ m.member_id }}</td></tr>
+<tr><td>Share type</td><td>{{ share_type }}</td></tr>
+<tr><td>Initial deposit</td><td>${{ deposit }}</td></tr>
+</table>
+<form method="post" action="/frame/members/{{ m.member_id }}/open-account/confirm">
+<input type="hidden" name="share_type" value="{{ share_type }}"><input type="hidden" name="deposit" value="{{ deposit }}">
+<p><input type="submit" value="Submit"> <a href="/frame/members/{{ m.member_id }}">Cancel</a></p>
+</form>
+{% endblock %}

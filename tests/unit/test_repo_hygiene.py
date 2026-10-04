@@ -37,10 +37,11 @@ def test_nfr07_no_secret_shaped_strings() -> None:
     assert hits == []
 
 
-def test_env_example_has_no_values() -> None:
+def test_env_example_has_no_secrets() -> None:
     for line in (ROOT / ".env.example").read_text(encoding="utf-8").splitlines():
         key, _, value = line.partition("=")
-        assert value in ("", "none"), f"{key} must be empty in .env.example"
+        if key.endswith(("_KEY", "_TOKEN", "_SECRET", "_PASSWORD")):
+            assert value == "", f"{key} must be empty in .env.example"
 
 
 def test_env_is_gitignored() -> None:

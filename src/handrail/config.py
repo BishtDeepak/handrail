@@ -34,6 +34,10 @@ class Settings(BaseSettings):
     schema_dir: Path = Path("schema")
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
 
+    mockbank_url: str = "http://127.0.0.1:8765"
+    browser_executable: Path | None = None
+    headless: bool = True
+
     def require_openai_key(self) -> SecretStr:
         if self.openai_api_key is None:
             raise ConfigError("OPENAI_API_KEY is not set; add it to .env (see .env.example)")

@@ -1,0 +1,13 @@
+<html><head><title>MockBank fault control</title></head>
+<body style="font-family:sans-serif">
+<h2>MockBank fault control</h2>
+<p>Not part of the app under test. Sessions: {{ sessions }}, sub-accounts opened: {{ opened }}.</p>
+<form method="post" action="/__mockbank/faults/form"><table cellpadding="4">
+{% for name, info in fields %}<tr><td><code>{{ name }}</code></td><td>
+{% if info.kind == "bool" %}<input type="checkbox" name="{{ name }}" {% if info.value %}checked{% endif %}>
+{% else %}<input type="text" name="{{ name }}" value="{{ info.value if info.value is not none else '' }}">{% endif %}
+</td><td>{{ info.help }}</td></tr>{% endfor %}
+</table><p><input type="submit" value="Apply"></p></form>
+<form method="post" action="/__mockbank/expire-sessions"><input type="submit" value="Expire all sessions"></form>
+<form method="post" action="/__mockbank/reset"><input type="submit" value="Reset everything"></form>
+</body></html>

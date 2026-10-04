@@ -1,0 +1,18 @@
+{% extends "_frame.html" %}{% block body %}
+<h2>Member Detail - {{ m.member_id }}</h2>
+<table border="0" cellpadding="2">
+<tr><td><b>Name</b></td><td>{{ m.name }}</td></tr>
+<tr><td><b>SSN</b></td><td>{{ m.ssn }}</td></tr>
+<tr><td><b>Date of birth</b></td><td>{{ m.dob }}</td></tr>
+<tr><td><b>Email</b></td><td>{{ m.email }}</td></tr>
+<tr><td><b>Phone</b></td><td>{{ m.phone }}</td></tr>
+<tr><td><b>Address</b></td><td>{{ m.address }}</td></tr>
+<tr><td><b>Card on file</b></td><td>{{ m.card }}</td></tr>
+</table>
+<br>
+<table border="1" cellpadding="3" cellspacing="0">
+<tr><th>Share</th><th>Code</th><th>Balance</th></tr>
+{% for s in shares %}<tr><td>{{ s.name }}</td><td>{{ s.code }}</td><td align="right">${{ "{:,.2f}".format(s.balance) }}</td></tr>
+{% endfor %}</table>
+<p><a href="/frame/members/{{ m.member_id }}/open-account">Open Sub-Account</a> | <a href="/frame/members/search">New search</a></p>
+{% endblock %}
